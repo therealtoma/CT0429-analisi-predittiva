@@ -43,3 +43,12 @@ Il **bias** è l'errore che si commette quando si approssima un problema comples
 Possiamo costrutire sia modelli che sono molto flessibili ma poco interpretabili, sia modelli che sono poco flessibili ma molto interpretabili. Un modello flessibile è un modello che si adatta bene ai dati, mentre un modello interpretabile è un modello che è facile da interpretare.
 
 Preferiremo modelli più strutturati rispetto a modelli più flessibili.
+
+# Probabilità base
+Di seguito una sere di definizioni sulla probabilità di base
+
+- **Valore atteso** : Il valore atteso di una variabile casuale $X$ è la media dei valori che $X$ può assumere, pesati per la probabilità che essi si verifichino.
+
+- **Varianza**: La varianza di una variabile casuale $X$ è una misura della sua dispersione. È definita come la media dei quadrati delle differenze tra il valore atteso di $X$ e i valori che $X$ può assumere, pesati per la probabilità che essi si verifichino.
+
+- **Covarianza**: La covarianza è una misura della relazione lineare tra due variabili casuali. È definita come la media dei prodotti delle differenze tra il valore atteso di $X$ e i valori che $X$ può assumere, pesati per la probabilità che essi si verifichino.
