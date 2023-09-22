@@ -52,3 +52,15 @@ Di seguito una sere di definizioni sulla probabilità di base
 - **Varianza**: La varianza di una variabile casuale $X$ è una misura della sua dispersione. È definita come la media dei quadrati delle differenze tra il valore atteso di $X$ e i valori che $X$ può assumere, pesati per la probabilità che essi si verifichino.
 
 - **Covarianza**: La covarianza è una misura della relazione lineare tra due variabili casuali. È definita come la media dei prodotti delle differenze tra il valore atteso di $X$ e i valori che $X$ può assumere, pesati per la probabilità che essi si verifichino.
+
+# Il predittore lineare ottimale
+
+$$
+\beta_0 = E[Y] - \beta_1 E[X]
+$$
+- $\beta_0$, l'intercetta ottimale, obbliga la retta a passare per il la media di $Y$ quando $X = 0$
+- $\beta_1 = \frac{Cov(X, Y)}{Var(X)}$
+- L'**inclinazione** aumenta all'aumentare di $Cov(X,Y)$ e diminuisce all'aumentare di $Var(X)$
+- I valori attesi $$ e $$ non hanno alcun ruolo all'interno della formula, l'unica cosa che conta sono $Cov(X,Y)$ e $Var(X)$, le quali non cambiano se si aggiungono / sottraggono costanti
+
+Concludiamo quindi che $\beta_0 + \beta_1 x$ rappresentano la **retta di regressione ottimale** ( o *predittore lineare ottimale*)
