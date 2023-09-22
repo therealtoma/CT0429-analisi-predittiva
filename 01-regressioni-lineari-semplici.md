@@ -64,3 +64,29 @@ $$
 - I valori attesi $$ e $$ non hanno alcun ruolo all'interno della formula, l'unica cosa che conta sono $Cov(X,Y)$ e $Var(X)$, le quali non cambiano se si aggiungono / sottraggono costanti
 
 Concludiamo quindi che $\beta_0 + \beta_1 x$ rappresentano la **retta di regressione ottimale** ( o *predittore lineare ottimale*)
+
+# Covaianza e correlazione empiriche
+Con il termine **empirico** intendiamo che stiamo lavorando con un campione di dati **reali**, **NON** con dati **teorici**.
+
+## Covarianza
+$$
+c_{XY} = \frac{1}{n}(\sum_{i=1}^nx_iy_i - n\bar{x}\bar{y})
+$$
+- $c_{XY}$ è la covarianza empirica tra $X$ e $Y$
+- $n$ è il numero di osservazioni
+- $\bar{x}$ è la media (campionaria) di $X$
+- $\bar{y}$ è la media (campionaria) di $Y$
+
+## Correlazione (indice di Pearson)
+$$
+r_{XY} = \frac{c_{XY}}{s_xs_y}
+$$
+- $r_{XY}$ è la correlazione empirica tra $X$ e $Y$
+- $s_x$ è la deviazione standard (campionaria) di $X$
+- $s_y$ è la deviazione standard (campionaria) di $Y$
+- $r_{XY}$ restituisce un valore compreso tra $-1$ e $1$
+
+
+![pearson](./assets/01/01-pearson.PNG)
+In base al valore dell'indice di Person possiamo capire dove si trova la concentrazione.
+
