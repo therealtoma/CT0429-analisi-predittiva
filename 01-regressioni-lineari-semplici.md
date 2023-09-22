@@ -90,3 +90,18 @@ $$
 ![pearson](./assets/01/01-pearson.PNG)
 In base al valore dell'indice di Person possiamo capire dove si trova la concentrazione.
 
+# Modello di regressione lineare semplice
+E' un modello statistico a due variabili $X$ e $Y$ che ha l'obiettivo di predirree/spiegare $Y$ essendo a conoscenza di $X$.
+
+## stima plug-in
+Il predittore ottimale di $Y$ dato $X$ ha pendenza e intercetta pari a:
+$$
+\beta_1 = \frac{Cov(X,Y)}{Var(X)}, \quad \beta_0=E[Y] - \beta_0E[X]
+$$
+
+Non essendo a conoscenza dell'intera popolazione ma di soltanto una parte, si useranno quindi i valori campionari:
+$$
+\hat{\beta_1} = \frac{c_{XY}}{s_x^2}, \quad \hat{\beta_0}= \bar{y} - \hat{\beta_1}\bar{x}
+$$
+
+Lo stesso risultato lo ottengo anche se utilizzo il metodo dei **minimi quadrati**.
