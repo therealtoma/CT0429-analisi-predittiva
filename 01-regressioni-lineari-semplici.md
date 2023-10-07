@@ -14,8 +14,9 @@ Per spiegare la notazione faremo uso di un esempio. Supponiamo di voler capire c
 
 - $Y$: variabile **risposta** / **obiettivo** / **risultato** / **output** (in questo caso le vendite)
 - $X_1, \dots, X_n$: variabili **caratteristiche** / **predittori** / **regressori**  (in questo caso *TV*, *radio*, *newspaper*)
-- $X$ è il vettore che contiene le variabili caratteristiche (in questo caso $X = (X_1, X_2, X_3)$)
-- Il nostro **modello** sarà quindi la funzione: ($\epsilon$ indica l'errore o discrepanze tra il modello e i dati reali)
+- $X$ è il vettore che contiene le variabili caratteristiche (in questo caso $X = (X_1, X_2, X_3)$ )
+- Il nostro **modello** sarà quindi la funzione: ( $\epsilon$ indica l'errore o discrepanze tra il modello e i dati reali)
+
 $$
 Y = m(X) + \epsilon
 $$
@@ -61,7 +62,7 @@ $$
 - $\beta_0$, l'intercetta ottimale, obbliga la retta a passare per il la media di $Y$ quando $X = 0$
 - $\beta_1 = \frac{Cov(X, Y)}{Var(X)}$
 - L'**inclinazione** aumenta all'aumentare di $Cov(X,Y)$ e diminuisce all'aumentare di $Var(X)$
-- I valori attesi $$ e $$ non hanno alcun ruolo all'interno della formula, l'unica cosa che conta sono $Cov(X,Y)$ e $Var(X)$, le quali non cambiano se si aggiungono / sottraggono costanti
+- I valori attesi $e$ non hanno alcun ruolo all'interno della formula, l'unica cosa che conta sono $Cov(X,Y)$ e $Var(X)$, le quali non cambiano se si aggiungono / sottraggono costanti
 
 Concludiamo quindi che $\beta_0 + \beta_1 x$ rappresentano la **retta di regressione ottimale** ( o *predittore lineare ottimale*)
 
