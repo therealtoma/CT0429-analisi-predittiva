@@ -107,3 +107,11 @@ $$
 $$
 ## Stima metodo minimi quadrati
 Lo stesso risultato lo ottengo anche se utilizzo il metodo dei **minimi quadrati**.
+
+## funzione lm
+All'interno di R è possibile utilizzare la funzione `lm` per calcolare al stima attraverso il metodo dei minimi quadrati.
+
+```r
+lm(formula = response ~ predictors, data = dataset)
+```
+dove `response` e `predictors` sono i nomi di due variabili / colonne del dataset `dataset`.
