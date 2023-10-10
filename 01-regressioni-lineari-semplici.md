@@ -116,3 +116,27 @@ All'interno di R è possibile utilizzare la funzione `lm` per calcolare al stima
 lm(formula = response ~ predictors, data = dataset)
 ```
 dove `response` e `predictors` sono i nomi di due variabili / colonne del dataset `dataset`.
+
+
+### bias e vaarianza delle stime dei parametri
+è possibile dimostrare che, con il metodo dei minimi quadrati le stime sono **non distorte** e hanno una specifica **varianza**:
+
+$$
+\mathbb{E}[\hat\beta_0 | x_1, ... x_n] = \beta_0 \qquad \text{e} \qquad \mathbb{E}[\hat\beta_1 | x_1, ... x_n] = \beta_1
+$$
+
+e
+
+$$
+Var[\hat\beta_0 | x1, ... x_n] = \sigma^2[\frac{1}{n} + \frac{\overline x^2}{ns^2_x}] \qquad \text{e} \qquad Var[\hat\beta_1 | x1, ... x_n] = \frac{\sigma^2}{ns^2_x}
+$$
+
+da cui si deduce che:
+- entrambe le stime sono **non distorte**: possiamo sperare che, quando $n$ è grande è possibile risalire al valore reale dei parametri
+- guardando le **varianze**: entambe hanno $\sigma^2$ al numeratore e $s_x^2$, $n$ al denominatore. Questo significa che la **variabilità aumenta** quando il *rumore* attorno alla linea di regressione aumenta. La **variabilità diminuisce** quando abbiamo molte osservazioni ($n$), che sono sparse lungo l'asse orizzontale ($s_x^2$)
+
+Infine l'**errore standard** di uno stimatore rappresenta la *devizione standard*
+
+$$
+se(\hat\beta_1) = \frac{\sigma}{\sqrt{ns_x^2}} \qquad \text{e} \qquad se(\hat\beta_0) = \sigma\sqrt{\frac{1}{n} + \frac{\overline x^2}{ns_x^2}}
+$$
