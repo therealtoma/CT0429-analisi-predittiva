@@ -140,3 +140,9 @@ Infine l'**errore standard** di uno stimatore rappresenta la *devizione standard
 $$
 se(\hat\beta_1) = \frac{\sigma}{\sqrt{ns_x^2}} \qquad \text{e} \qquad se(\hat\beta_0) = \sigma\sqrt{\frac{1}{n} + \frac{\overline x^2}{ns_x^2}}
 $$
+
+## predizioni
+Dato che non siamo a conoscenza di $\beta_0$ e $\beta_1$, facciamo una **predizione** $\hat m(x) = \beta_0 + \beta_1 x$.
+Analizziamo quindi la **casualità** di $\hat m$:
+- capiamo qual è il valore atteso $\mathbb{E}[\hat m(x) | x, x_1, ... x_n] = \beta_0+\beta_1 x$
+- controlliamo ora la **varianza**, riscriviamo $\hat m (x)$ come $\hat m = (\hat Y - \hat \beta_1 \overline x) + \hat \beta_1 x = \overline Y +(x - \overline x)\hat \beta_1$
