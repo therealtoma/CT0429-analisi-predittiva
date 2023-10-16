@@ -42,3 +42,38 @@ $$
 Una volata che sono stati trovati i parametri della retta si ha la migliore predizione possibile per quel modello. Prima di poter usare il modello bisogna controllare che sia valido:
 - verificare che anche le assunzioni siano valide (omoschedasticità, normalità, indipendenza degli errori)
 - valutare quanto bene il modello si **adatta** ai dati, attraverso diversi metodi come il controllo del coefficiente $R^2$ o la verifica dei residui
+
+#### valutazione del modello
+Una volta che i parametri del modello sono stati scelti, è necessario assicurarsi che il modello sia **valido** e che si adatti correttamente ai dati. Esistono diversi metodi per valutare il modello:
+
+**coefficiente di determinazione** $R^2$
+indica la proporzione tra la varianza della variabile dipendente che è predicibile dalla variabile indipendente;
+
+$$
+R^2 = 1 - \frac{SS_{res}}{SS_{tot}}
+$$
+
+dove $SS_{res}$ indica la somma dei quadrati dei residui e $SS_{tot}$ indica la somma dei quadrati totali (varianza totale)
+
+Il coefficiente $R^2$ restituisce valori compresi tra $0$ e $1$, un valore vicino a $1$ indica che una grande porzione della varianza di $Y$ è spiegata dal modello, mentre un valore vicino a $0$ indica che il modello non è in grado di spiegare correttamente la varainza di $Y$.
+
+**test di significatività dei coefficienti (test t)**
+Il **test t** è usato per determinare se i coefficienti di regressione sono significativamente diversi da zero; un coefficiente che non è significativamente diverso da zero è un coefficiente poco significativo e può essere omesso.
+
+$$
+t = \frac{b}{SE(b)}
+$$
+
+in questo caso $b$ indica il coefficiente che si intende stimare e $SE(b)$ è il suo errore standard; un alto valore di $t$ (o un basso valore di $p$)indica che il coefficiente è significativamente diverso da zero
+
+**intervallo di confidenza**
+sono degli intervalli di valori nei quali c'è un'alta probabilità di trovare l'effettivo parametro della popolazione, con un certo livello di confidenza (es. $95 \%$), più è ristretto il parametro e più è precisa la stima
+
+**analisi dei residui**
+Dopo aver stimato il modello, è importante esaminare i residui per verificare se le assunzioni del modello sono state soddisfatte. Ciò include la verifica della normalità, omocedasticità, e l'indipendenza degli errori.
+
+**validazione del modello**
+la validazione del modello può includere l'uso di dati di convalida per verificare la performance del modello su un set di dati non visto in precedenza. Questo aiuta a garantire che il modello non sia sovraadattato ai dati di addestramento.
+
+**confronto con altri modelli**
+potrebbe essere utile confrontare la performance del modello di regressione lineare semplice con altri modelli statistici o di machine learning per valutare se esistono modelli che forniscano previsioni più accurate o insight più utili.
