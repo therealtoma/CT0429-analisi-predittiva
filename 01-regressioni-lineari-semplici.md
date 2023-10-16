@@ -27,3 +27,18 @@ $$
 - **indipendenza dagli errori**: gli errori (residui) devono rimanere indipendenti l'uno dall'altro. Nel caso in cui gli errori sono dipendenti, si parla di **autocorrelazione**, la quale può invalidare le predizioni del modello
 
 Ognuna di queste assunzioni è fondamentale per garantire l'**accuratezza** e l'**affidabilità** del modello di regressione lineare semplice. Nel caso in cui queste assunzioni sono verificate si parla di un modello in grado di fornire stime **unbiased** (non distorte) 
+
+### stima dei parametri
+I parametri fondamentali in una retta di regressione lineare semplice sono il coefficente della retta (**pendenza**) e l'**intercetta**. Questi parametri sono scelti in modo da **minimizza** la somma dei quadrati degli errori (residiui) tra i valori osservati e i valori predetti dal modello di regressione.
+Il metodo utilizzato per stimare questi parametri è il metodo dei **minimi quadrati**.
+
+#### metodo dei minimi quadrati
+Il metodo dei minimi quadrati è una tecnica per stimare la retta di regressione che consiste nel trovare il valore che **minimizza** la somma dei quadrati delle differenze tra i valori osservati e i valori predetti dalla linea di regressione.
+
+$$
+a = \overline y - b \overline x \qquad b = \frac{\sum_{i=1}^n (x_i - \overline x)(y_i - \overline y)}{\sum_{i=1}^n (x_i - \overline x)^2} = \frac{c_{xy}}{s^2_x}
+$$
+
+Una volata che sono stati trovati i parametri della retta si ha la migliore predizione possibile per quel modello. Prima di poter usare il modello bisogna controllare che sia valido:
+- verificare che anche le assunzioni siano valide (omoschedasticità, normalità, indipendenza degli errori)
+- valutare quanto bene il modello si **adatta** ai dati, attraverso diversi metodi come il controllo del coefficiente $R^2$ o la verifica dei residui
