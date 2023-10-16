@@ -19,3 +19,11 @@ $$
 - $a$: è l'intercetta sull'asse $Y$ della retta di regresssione
 - $b$: è la **pendenza** della retta di regressione, rappresenta il cambiamento di $Y$ per unità di cambiamento di $X$
 - $\epsilon$: consiste nell'**errore** di stima, ovvero la differenza tra i valori osservati di $Y$ e quelli predetti dall'equazione della retta di regressione
+
+### assunzioni
+- **linearità**: indica che la relazione tra la variabile **indipendente** ($X$) e la variabile **dipendente** ($Y$) è lineare. Questo significa che il cambiamento nella variabile dipendente è proporzionale al cambiamento nella variabile indipendente.
+- **normalità**: gli erorri del modello (**residui**) devono essere *normalmente distribuiti*, è possibile verificare questa assunzione attraverso test statistici o graficamente come un `plot Q-Q`
+- **omoschedascticità**: indica che la **varianza** degli errori è **costante**; la varianza dei residui (errori) deve rimanere costante attraverso i vari valori della variabile indipendente ($X$). Se la varianza cambia a diversi valori della variabile indipendente, allora si dice che la varianza è **eteroschedastica**, la quale può invalidare le predizioni del modello
+- **indipendenza dagli errori**: gli errori (residui) devono rimanere indipendenti l'uno dall'altro. Nel caso in cui gli errori sono dipendenti, si parla di **autocorrelazione**, la quale può invalidare le predizioni del modello
+
+Ognuna di queste assunzioni è fondamentale per garantire l'**accuratezza** e l'**affidabilità** del modello di regressione lineare semplice. Nel caso in cui queste assunzioni sono verificate si parla di un modello in grado di fornire stime **unbiased** (non distorte) 
