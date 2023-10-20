@@ -77,3 +77,11 @@ la validazione del modello può includere l'uso di dati di convalida per verific
 
 **confronto con altri modelli**
 potrebbe essere utile confrontare la performance del modello di regressione lineare semplice con altri modelli statistici o di machine learning per valutare se esistono modelli che forniscano previsioni più accurate o insight più utili.
+
+#### diagnostica del modello
+questo processo si occupa di identificare eventuali problemi nel modello di regressione lieare e assicurarsi che le assunzioni fatte siano corrette.
+Diversi sono gli aspetti che possono essere controllati:
+
+**analisi dei residui**
+- consistono nella differenza tra i valori osservati dalla variabile dipendente $Y $ e i valori predetti dal modello di regressione. Analizzando la distribuzione dei residui è possibile individuare problemi nel modello, come la *eteroschedasticità*, *non linearità*, *outliers*.
+- comunemente viene fatto il **plot** dei residui contro i valori predetti o la variabile indipendente
