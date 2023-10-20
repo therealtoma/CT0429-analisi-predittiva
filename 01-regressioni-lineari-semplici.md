@@ -94,3 +94,19 @@ Diversi sono gli aspetti che possono essere controllati:
 **statistiche di output**
 - coefficiente $p$: rappresenta la possibilità di ottenere un valore estremo, assumendo che la *null hyoptesis* (assenza di relazione tra le variabili) sia verificata. Un valore piccolo (tendenzialmente $p \lt 0.05$) indica che il coefficiente statistico è significativo
 - coefficiente di determinazione $R^2$: come spiegato prima, indica la porzione di varianza di $Y$ che viene spiegata dal modello
+
+#### estensioni e limitazioni
+quali sono le limitazioni della regressione lineare semplice? quando la regressione lineare semplce è adatta e quando deve essere estesa/modificata per poter affrontare problemi più complessi?
+
+**le assunzioni non vengono soddisfatte**
+Se le assunzioni della regressione lineare semplice non sono soddisfatte, le stime dei coefficienti possono essere distorte, e le inferenze statistiche possono essere invalidi. Ad esempio, la presenza di eteroscedasticità o di relazioni non lineari può rendere il modello inadatto.
+
+**dati categorici**
+Nella regressione lineare semplice, la variabile indipendente è tipicamente continua. Tuttavia, se si dispone di dati categorici, possono essere convertiti in variabili dummy (0 o 1) per l'inclusione nel modello, anche se ciò è più comune nella regressione lineare multipla.
+
+**regressione lineare multipla**
+La regressione lineare multipla è un'estensione della regressione lineare semplice che permette l'inclusione di più variabili indipendenti. Questo modello può catturare relazioni più complesse e fornire insight più dettagliati, ma richiede anche una maggiore attenzione alle assunzioni e alle condizioni del modello.
+è possibile fare riferimento al seguente [link](./02-regressione-lineare-multipla.md) per maggiori informazioni.
+
+**trasformazioni delle variabili**
+Se la relazione tra la variabile indipendente e quella dipendente non è lineare, potrebbe essere utile trasformare le variabili (ad esempio, logaritmo, radice quadrata) per linearizzare la relazione.
