@@ -85,3 +85,12 @@ Diversi sono gli aspetti che possono essere controllati:
 **analisi dei residui**
 - consistono nella differenza tra i valori osservati dalla variabile dipendente $Y $ e i valori predetti dal modello di regressione. Analizzando la distribuzione dei residui è possibile individuare problemi nel modello, come la *eteroschedasticità*, *non linearità*, *outliers*.
 - comunemente viene fatto il **plot** dei residui contro i valori predetti o la variabile indipendente
+
+#### interpretazione dei risultati
+**coefficienti**
+- l'intercetta $a$ indica il valore atteso della variabile dipendente $Y$ quando la variabile indipendente $X$ è uguale a $0$
+- la pendenza $b$ indica il cambiamento atteso nella variabile dipendente $Y$ per unità di cambiamento della variabile indipendente $X$
+
+**statistiche di output**
+- coefficiente $p$: rappresenta la possibilità di ottenere un valore estremo, assumendo che la *null hyoptesis* (assenza di relazione tra le variabili) sia verificata. Un valore piccolo (tendenzialmente $p \lt 0.05$) indica che il coefficiente statistico è significativo
+- coefficiente di determinazione $R^2$: come spiegato prima, indica la porzione di varianza di $Y$ che viene spiegata dal modello
