@@ -1,7 +1,8 @@
 ---
 title: "Esercizio 2 - Regressione Lineare Multipla"
-author: "Inserite il vostro nome"
+author: "Alberto Tomasin"
 output: html_document
+root.dir: "./es2"
 ---
 
 Si prenda in esame il dataset `salaries`: 
@@ -13,19 +14,82 @@ salaries <- salaries[order(salaries$sex,decreasing = TRUE),]
 
 Il dataset comprende informazioni raccolte da un college americano che desidera monitorare la parità salariale tra i generi. In particolare il dataset contiene le seguenti variabili: 
 
-* rank: a factor with levels AssocProf AsstProf Prof
-* discipline: a factor with levels A (“theoretical” departments) or B (“applied” departments).
-* yrsSincePhd: years since PhD.
-* yrsService: years of service.
-* sex: a factor with levels Female Male
-* salary: nine-month salary, in 1000s dollars.
+* **rank**: a factor with levels AssocProf AsstProf Prof
+* **discipline**: a factor with levels A (“theoretical” departments) or B (“applied” departments).
+* **yrsSincePhd**: years since PhD.
+* **yrsService**: years of service.
+* **sex**: a factor with levels Female Male
+* **salary**: nine-month salary, in 1000s dollars.
 
 
-1. Si verifichi se i salari medi sono uguali per uomini e donne. 
+1. Si verifichi se i salari medi sono uguali per uomini e donne.
+
+Carico le librerie
+```{r}
+library(ggplot2)
+```
+
+
+Attraverso una test t controlliamo se ci sono differenze significative nei salari tra uomini e donne
+```{r}
+t.test(salary ~ sex, data = salaries)
+```
+Ora mostro i dati per capire la distribuzione dei salari in base al sesso
+```{r}
+ggplot(
+  data = salaries,
+  mapping = aes(
+    x = salary,
+    y = sex
+  )
+) + geom_boxplot()
+```
+
 
 2. Si verifichi usando dei modelli lineari semplici se vi è una relazione tra salario e anni di carriera (`yrsService`) e salario ed anni di esperienza (`yrsSincePhd`). 
 
-3. Si valuti se la variabile `rank` può aggiungere capacità predittiva al modello stimato al punto 2.: si stimi un modello in cui `rank` entra solo in maniera additiva nel modello e uno in cui `rank` interagisce con `yrsService`. Si crei una visualizzazione che mostra l'effetto di `yrsService` sui salari per i diversi gradi di carriera in entrambi i modelli. 
+### salary - yrsService
+Creo un modello lineare per predirre il salario in base agli anni di carriera
+```{r}
+mod1 <- lm(salary ~ yrsService, data = salaries)
+summary(mod1)
+```
+Possiamo notare che abbiamo un `p-value` molto basso (< 0.05), questo indica che gli anni di servizio sono significativi per il variare del salario.
+Inoltre, controllando l'`adjusted R-squared` notiamo che ha un valore vicino a `0`. Da questo siamo in grado di concludere che il modello spiega i dati leggermente meglio della media
+
+### salary - yrsSincePhd
+Creo un modello lineare per predirre il salario in base agli anni di esperienza
+```{r}
+mod2 <- lm(salary ~ yrsSincePhd, data = salaries)
+summary(mod2)
+```
+Possiamo notare che abbiamo un `p-value` molto basso (< 0.05), questo indica che gli anni di esperienza sono significativi per il variare del salario.
+Inoltre, controllando l'`adjusted R-squared` notiamo che ha un valore vicino a `0`. Da questo siamo in grado di concludere che il modello spiega i dati leggermente meglio della media
+
+
+3. Si valuti se la variabile `rank` può aggiungere capacità predittiva al modello stimato al punto 2.: si stimi un modello in cui `rank` entra solo in maniera additiva nel modello e uno in cui `rank` interagisce con `yrsService`. Si crei una visualizzazione che mostra l'effetto di `yrsService` sui salari per i diversi gradi di carriera in entrambi i modelli.
+
+### modello additivo
+```{r}
+mod_additive <- lm(salary ~ yrsService + rank, data = salaries)
+summary(mod_additive)
+```
+
+procedo ora a mostrare le informazioni relative all modello additivo
+```{r}
+ggplot(
+  salaries,
+  aes(
+    x = yrsService,
+    y = salary,
+  )
+  + geom_point()
+  + geom_smooth(method = "lm", formula = y ~ x)
+  + ggtitle("Effetto di yrsService sui salari per rank (modello additivo)")
+)
+```
+
+
 
 4. Si stimi un modello in cui tutti i predittori a disposizione vengono inseriti in maniera additiva nel modello lineare: si valuti se, a parità di altre condizioni, vi è una differenza negli stipendi medi di uomini e donne. Come è cambiata l'interpretazione dell'effetto del sesso rispetto al punto 1.?
 
