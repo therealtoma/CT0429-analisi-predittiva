@@ -1,23 +1,13 @@
 ---
 title: "CT0429 - Analisi Predittiva - aa 21/22 - Appello I"
-author: "Nome Cognome - matricola"
+author: "Nome Cognome - 892614"
+date: "2023-11-12"
 output: 
   html_document: 
     toc: yes
 ---
 
 # Istruzioni
-
-Salvate questo file con il nome `matricola.Rmd`. Questo sarà il file che dovrete consegnare. Il file deve compilare senza problemi: files che non possono essere compilati correttamente saranno penalizzati. 
-
-
-Per essere sicuri di poter trovare il file al momento della consegna potete controllare dove è il file quando compilate il file la prima volta usando il comando `getwd()`. 
-
-```{r, eval=TRUE}
-getwd()
-## da cancellare quando siete sicuri di dove è il file
-```
-
 
 Attenzione - per tutto l'esame, se non specificato esplicitamente, il livello di significatività da usare è $\alpha = 0.02$
 
