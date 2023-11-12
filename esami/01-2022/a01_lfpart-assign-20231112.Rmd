@@ -129,7 +129,16 @@ Si commenti l'effetto stimato delle variabili `numAccess` e `numRequests`
 
 
 
+```{r}
+fitTot <- glm(
+  fail ~ .,
+  data = dex2,
+  family = binomial
+)
 
+summary(fitTot)
+```
+In questo caso si sta stimando che, al crescere del numero di accessi, il numero di richieste diminuisce, cosa che però non è vera. Inoltre la variabile `numRequests` è poco significativa, quindi non possiamo rifiutare l'ipotesi nulla $H_0: \beta_{numRequest} = 0$
 
 ### Es. 2.b
 
