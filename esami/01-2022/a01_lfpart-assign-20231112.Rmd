@@ -32,20 +32,65 @@ dex1 <- read.csv("ex1_data.csv", header = TRUE)
 
 Si costruisca un primo modello `fit1` in cui le variabili `age` e `numAccess` sono usate come predittori. Si stimi il modello `fit1` commentando la sua significatività. 
 
+```{r}
+fit1 <- lm(time ~ ., data = dex1)
+# in alternativa posso anche scrivere
+# fit1 <- lm(time ~ numAccess + age, data = dex1)
 
+summary(fit1)
+```
 
+Il modello ha un p-value molto basso (< 0.05), risultando quindi significativo; inoltre il valore dell' `adjusted R-squared` indica che il modello spiega quasi il **93%** della variabilità.
+Notiamo infine che solamente la variabile `numAccess` risulta significativa, `age` ha un p-value troppo alto
 
 ### Es. 1.b 
 
 Si costruisca un modello `fit2` in cui solo la variabile `numAccess` è usata come predittore: si verifichi tramite una verifica di ipotesi se il modello `fit2` risulta significativo rispetto al modello `fit1`. Si scriva in forma esplicita l'ipotesi nulla e alternativa che si stanno verificando tramite il test indicando infine se è possibile rifiutare l'ipotesi nulla. 
 
+prima di tutto creiamo il modello `fit2`
+```{r}
+fit2 <- lm(time ~ numAccess, data = dex1)
 
+summary(fit2)
+```
+
+capiamo, attraverso il test `anova`, se il modello `fit2` risulta più significativo rispetto al modello `fit1`
+```{r}
+anova(fit1, fit2)
+```
+
+Confrontando i risultati ottenuti dal test anova, concludiamo che non possiamo rifiutare l'ipotesi nulla \[H_0: \beta_{age} = 0\] contro l'ipotesi alternativa \[H_a: \beta_{age} \not = 0\] concludendo dunque che è possibile rimuovere `age` dal modello.
 
 ### Es. 1.c
 
 Usando il modello `fit2` si calcolino degli intervalli di confidenza e di predizione per degli utenti che compiano 60 e 200 accessi. Si commenti l'ampiezza degli intervalli ottenuti e si spieghi brevemente la differenza tra intervallo di confidenza e di predizione.  
 
+calcolo l'intervallo di confidenza:
 
+```{r}
+conf <- predict(
+  fit2,
+  newdata = data.frame(numAccess = c(60, 200)),
+  interval = "confidence"
+)
+conf[, 3] - conf[, 2]
+```
+
+calcolo l'intervallo di predizione:
+```{r}
+pred <- predict(
+  fit2,
+  newdata = data.frame(numAccess = c(60, 200)),
+  interval = "prediction"
+)
+pred[, 3] - pred[, 2]
+```
+
+
+Notiamo che il secondo intervallo di confidenza (relativo ai 200 accessi) è molto più ampio rispetto al primo: questo perchè all'interno del dataset non sono presenti casi in cui un utente ha eseguito più di 200 accessi.
+la stessa cosa vale per il secondo intervallo di predizione.
+
+La differenza tra intervallo di confidenza e intervallo di predizione sta nel fatto che l'intervallo di confidenza rappresenta l'errore attorno al valore medio, l'intervallo di predizione da una misura dell'incertezza attorno al valpre previsto.
 
 
 
