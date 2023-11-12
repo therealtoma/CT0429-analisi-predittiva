@@ -1,8 +1,9 @@
 ---
 title: "Esercizio 1 - Regressione Lineare Semplice"
-author: "Inserite il vostro nome"
+author: "Alberto Tomasin"
 date: "`r format(Sys.Date(), '%d %B %Y')`"
 output: html_document
+root.dir: "./es1"
 ---
 
 Si prenda in esame il dataset `bodyfat`: 
@@ -21,7 +22,13 @@ plot(Weight~Height, data = bodyfat)
 
 * Si scriva il modello stimato in forma estesa (cioè si scriva la forma matematica del modello)
 
+\[Y_i = \beta_0 + \beta_1 X_1 + \varepsilon_1\]
+
 * Si dia una stima del modello: valori dei coefficienti e loro significatività. Si interpreti il valore di ognuno dei coefficienti. 
+
+Quello che ci interessa stimare è:
+\[E[Y | X=x] = \beta_0 + \beta_1 x\]
+
 
 * Qual è il valore del coefficiente $R^2$ - come si può interpretare questo valore? 
 
