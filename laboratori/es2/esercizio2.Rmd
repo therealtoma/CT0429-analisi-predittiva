@@ -23,7 +23,68 @@ Il dataset comprende informazioni raccolte da un college americano che desidera 
 
 1. Si verifichi se i salari medi sono uguali per uomini e donne. 
 
+# mia soluzione
+
+Come prima cosa, divido il dataset im maschi e femmine
+```{r}
+male <- salaries[grep('Male', salaries$sex), ]
+female <- salaries[grep('Female', salaries$sex), ]
+
+print(nrow(salaries) == (nrow(male) + nrow(female))) # mi assicuro di non aver tralasciato alcun record
+
+```
+calcolo ora la media dei salari
+```{r}
+print(paste0('La media dei salari degli uomini è pari a: ', mean(male$salary)))
+print(paste0('La media dei salari delle donne è pari a: ', mean(female$salary)))
+```
+Possiamo notare che i salari medi degli uomini sono circa 16 mila dollari più alti rispetto a quelli delle donne
+
+
+# soluzione prof
+
+```{r}
+t.test(salary ~ sex, data = salaries, var.equal = TRUE)
+```
+
+da questo test siamo in grado di capire se è presente una differenza. Il p-value è piccolo perciò possiamo dire chè c'è una differenza.
+Un altro modo per capire se è presente una differenza è plottando i grafici (faccio boxplot perc+ sex è variabile categorica)
+```{r}
+boxplot(salary ~ sex, data = salaries)
+```
+
+
 2. Si verifichi usando dei modelli lineari semplici se vi è una relazione tra salario e anni di carriera (`yrsService`) e salario ed anni di esperienza (`yrsSincePhd`). 
+
+#### salario e anni di esperienza
+
+```{r}
+mod1 <- lm(salary ~ yrsService, data = salaries)
+summary(mod1)
+
+```
+```{r}
+plot(salary ~ yrsService, data = salaries)
+abline(mod1, col='red')
+```
+
+Possiamo notare, anche attraverso al plot dei dati, che per ogni anno di esperienza, il salario aumentda di `r mod1$coefficients[1]` dollari
+
+#### salario e years since phd
+```{r}
+mod2 <- lm(salary ~ yrsSincePhd, data = salaries)
+summary(mod2)
+```
+
+```{r}
+plot(salary ~ yrsSincePhd, data = salaries)
+abline(mod2, col='red')
+```
+
+Notiamo un incremento minore del salario in questo caso
+
+#### conclusioni
+possiamo dire che, sia nel primo modello che nel secondo è presente una forte relazione tra salario e anni di esperienza / anni since phd
 
 3. Si valuti se la variabile `rank` può aggiungere capacità predittiva al modello stimato al punto 2.: si stimi un modello in cui `rank` entra solo in maniera additiva nel modello e uno in cui `rank` interagisce con `yrsService`. Si crei una visualizzazione che mostra l'effetto di `yrsService` sui salari per i diversi gradi di carriera in entrambi i modelli. 
 
