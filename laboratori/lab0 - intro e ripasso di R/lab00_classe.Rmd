@@ -41,7 +41,7 @@ Andiamo a leggere un file che contiene informazioni sul prezzo degli affitti nel
 Il file è disponibile su Moodle ed è reso disponibile sul [sito](https://www.uni-goettingen.de/de/551625.html) del libro *Regression* di Fahrmeir et al (un ottimo libro che copre aspetti avanzati di regressione lineare e non lineare)
 
 ```{r}
-mrents <- read.table("./dati/rent99.raw", header = TRUE)
+mrents <- read.table("../data/rent99.raw", header = TRUE)
 ## rent: net rent per month (euros)
 ## rentsqm: net rent per month  per square meter (euros)
 ## area Living area square meters)
@@ -57,17 +57,14 @@ Usiamo questo dataset per rivedere alcuni comandi di R:
 
 
 ```{r}
-#?
-summary(mrents)
-#?
-head(mrents)
+#?summary
+#?head
 ```
 
 La principale variabile di interesse è la variabile `rent`: si può visualizzare la distribuzione della variabile (che è continua) facendone  un istogramma: 
 
 ```{r}
-# ? 
-hist(mrents$rent)
+# ? hist 
 ```
 
 Notiamo come la variabile sia abbastanza asimmetrica con una coda abbastanza lunga a destra. 
@@ -75,12 +72,9 @@ Notiamo come la variabile sia abbastanza asimmetrica con una coda abbastanza lun
 Possiamo calcolare (e visualizzare su un grafico) alcune caratteristiche della variabile: 
 
 ```{r}
-# ?
-mean(mrents$rent)
-# ?
-median(mrents$rent)
-# ?
-quantile(mrents$rent)
+# ?mean
+# ?median
+# ?quantile
 ```
 
 Per visualizzare invece le caratteristiche di variabili categoriali possiamo usare dei barplot: 
@@ -120,9 +114,7 @@ Qual è invece l'effetto della `location`?
 I boxplots risultano utili per confrontare variabili continue per diversi livelli di variabili categoriali. Spesso però il nostro interesse è nella relazione tra due o più variabili continue. Per esempio potremmo voler indagare l'effetto che ha l'area di un immobile sul prezzo d'affitto. Per visualizzare questa relazione possiamo usare un grafico di dispersione: 
 
 ```{r}
-#?
-plot(rent ~ area, data = mrents)
-plot(mrents$yearc, mrents$rent)
+#?plot
 ```
 
 
