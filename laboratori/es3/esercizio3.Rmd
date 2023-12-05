@@ -1,0 +1,42 @@
+---
+title: "Esercizio 3 - Modelli generalizzati"
+author: "Inserite il vostro nome"
+output: html_document
+---
+
+Si prenda in esame il dataset `fHH1.csv`: 
+
+```{r}
+fhh <- read.csv("fHH1.csv")
+```
+
+Il dataset comprende informazioni sulle famiglie raccolte in un'analisi campionaria svolta dall'Istituto Nazionale Statistico delle Filippine. L'istituto svolge ogni 3 anni la Family Income and Expenditure Survey (FIES), in cui sono raccolti dati sulle famiglie, i loro redditi e le loro spese. I dati a nostra disposizione sono un sotto-campione di 1500 unità campionarie dall'indagine svolta nel 2015 in 5 regioni del paese. Le variabili a nostra disposizione sono:
+
+- `location` = dove è la casa campionata (Central Luzon, Davao Region, Ilocos Region, Metro Manila, o Visayas)
+- `age` = l'età del capofamiglia
+- `total` = il numero di persone che compone la famiglia (oltre al capofamiglia)
+- `numLT5` =  il numero di persone nella famiglia sotto i 5 anni
+- `roof` = il tipo di tetto della famiglia (uno tra `Predominantly Light/Salvaged Material`, o `Predominantly Strong Material`, dove l'uso di materiali più durevoli viene utilizzato come indicatore di maggiore ricchezza)
+
+
+Si desidera studiare a quale età un capofamiglia filippino può in media aspettarsi che la famiglia raggiunga la sua dimensione più grande. Inoltre si vuole indagare se questa età è influenzata dalla ricchezza della famiglia e dalla regione in cui si trova la famiglia. Per indagare queste domande si utilizza una regressione di Poisson, cioè un GLM. 
+
+
+1. Si visualizzi la relazione tra `age` e `total`: vi è una chiara relazione tra le variabili? 
+2. Si visualizzi la relazione tra `age` e il valore medio di `total` per ogni età di capofamiglia registrata nel campione. La relazione diventa più chiara? Si visualizzai la relazione sulla scala misurata (il numero totale di persone) e sulla scala della funzione legame canonica. 
+3. Si visualizzi la relazione tra `age` e il valore medio di `total` per ogni età di capofamiglia registrata nel campione per le famiglie con tetti in materiali durevoli o non durevoli: c'è una differenza notevole? E per le diverse regioni del paese?
+4. Si stimi un modello GLM di Poisson che metta in relazione l'età del capofamiglia con la dimensione della famiglia. A che età un capofamiglia può aspettarsi di avere la famiglia più grande nel suo percorso di vita (attenzione però a questa interpretazione: i dati non seguono i singoli individui nel loro percorsi di vita). 
+5. Si crei una Figura che permetta di visualizzare la relazione stimata dal modello stimato al punto 4. 
+6. Si verifichi se il modello al punto 4. può essere migliorato aggiungendo `roof` o `location`: si creino delle visualizzazioni che permettono di visualizzare la relazione stimata dal modello in cui `roof` e/o `location` sono usati come predittori nel modello 
+7. Si utilizzi il miglior modello individuato al punto 6. per costruire degli intervalli di confidenza al livello di confidenza del 94% per la numerosità delle famiglie specificate nel dataset `nd`: 
+
+```{r}
+nd <- data.frame(location = c("CentralLuzon", "MetroManila", "DavaoRegion","Visayas","IlocosRegion",
+                              "CentralLuzon", "MetroManila", "DavaoRegion","Visayas","IlocosRegion"),
+                 age = rep(30,30,30,30,30,60,60,60,60,60), 
+                 numLT5 = rep(1,10), roof = "Predominantly Strong Material")
+```
+
+
+
+
