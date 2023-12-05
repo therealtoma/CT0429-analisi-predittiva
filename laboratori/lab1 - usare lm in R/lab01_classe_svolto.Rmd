@@ -1,0 +1,139 @@
+---
+title: "Laboratorio 1 - Analisi predittiva"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+pengs <- read.csv("../data/penguins.csv")
+pengs <- na.omit(pengs)
+```
+
+
+```{r}
+plot(flipper_length_mm ~ body_mass_g, data = pengs, pch = 16)
+x <- pengs$body_mass_g
+y <- pengs$flipper_length_mm
+n <- length(x)
+s2x <- sum((x-mean(x))^2)/n
+s2y <- sum((y-mean(y))^2)/n
+covxy <- cov(x,y) 
+rxy <- cor(x,y)
+mx <- mean(x); my <- mean(y)
+(beta1 <- rxy * sqrt(s2y/s2x))
+(beta0 <- my - beta1 *mx)
+abline(beta0, beta1, col = 2, lwd = 1.4)
+yhat <- beta0 +  beta1 * x # valori stimati 
+sum((y-yhat)^2) ## empirical MSE 
+sum((y-(137+0.016*x))^2) 
+```
+
+In realtà si userà sempre la funzione `lm`
+
+```{r}
+fit <- lm(flipper_length_mm ~ body_mass_g, data = pengs)
+fit
+```
+
+```{r}
+summary(fit)
+```
+
+```{r}
+yhat <- coef(fit)[1] + coef(fit)[2] * pengs$body_mass_g
+head(yhat)
+head(fitted(fit))
+head(fit$fitted.values)
+s2e <- sum((pengs$flipper_length_mm - 
+             yhat)^2)/(333-2) 
+s2e
+# errori del modello 
+head((pengs$flipper_length_mm - yhat))
+head(fit$residuals)
+sqrt(s2e*(1/n + mx^2/(n*s2x))) # std err beta1 
+sqrt(s2e / (n*s2x)) # std error beta0 
+
+```
+
+
+Quando usiamo `summary` vediamo anche l'informazione sul valore del `Residual standard error`: questo corrisponde ad una stima di $\sigma$. Come è derivato? E il valore di $R^2$? E l'incertezza sui valori stimati di $\beta_0$ e $\beta_1$? 
+
+Ci sono molte funzioni generiche che possiamo usare sui un oggetto di classe `lm`, alcune sono indicate in fondo all'help della funzione lm `?lm`. 
+
+```{r}
+head(residuals(fit))
+head(fit$residuals)
+mean(fit$residuals)
+cor(fit$residuals, pengs$body_mass_g)
+plot(pengs$body_mass_g, fit$residuals)
+
+```
+
+
+In particolare `predict` oltre a restituire una stima di $m(x)$ permette di ottenere informazioni su quanto sia incerta questa stima (`?predict`). 
+
+```{r}
+# ?fitted
+# ?predict
+nd <- data.frame(body_mass_g = c(2500, 4500))
+predict(fit, newdata = nd)
+predict(fit, newdata = data.frame(body_mass_g = 5501)) - 
+  predict(fit, newdata = data.frame(body_mass_g = 5500))
+predict(fit, newdata = nd, se.fit = TRUE)
+
+sqrt((s2e/n)*(1 + (nd$body_mass_g - mx)^2/s2x))
+
+```
+
+
+Cosa succede al nostro modello se cambiamo le scale in cui misuriamo le variabile?  
+
+
+# Simulazione come metodo per verificare la teoria 
+
+Il modello teorico: 
+
+\[Y=\beta_0 + \beta_1 X + \varepsilon\]
+
+$\varepsilon$ iid, omoschedastici a media 0
+
+```{r}
+#set.seed(123)
+n <- 30
+x <- seq(0, 1, length.out = n)
+b0 <- 1; b1 <- 2
+# E[Y|X = x] = b0 + b1 * x 
+# Y = E[Y] + error
+error <- rexp(n, 1)-1 # media = 0 
+# error <- runif(n ,-3, 3)
+# error <- rgamma(n ,3, 1) - 3
+y <- b0 + b1 * x+ error 
+plot(x,y)
+coef(lm(y ~ x))
+```
+
+```{r}
+generate_get_beta <- function(bs, epsilonpar , xvec){
+  yvec <- bs[1] + bs[2] * xvec + (rexp(n, epsilonpar)-1/epsilonpar)
+  coef(lm(yvec ~ xvec))
+}
+generate_get_beta(bs = c(b0, b1), epsilonpar = 1, xvec = x)
+```
+
+```{r}
+out <- replicate(5000, generate_get_beta(bs = c(b0, b1), epsilonpar = 1, xvec = x))
+mean(out[1,])
+mean(out[2,])
+par(mfrow=c(1, 2))
+hist(out[1,]);hist(out[2,]) 
+sd(out[1,])
+sd(out[2,])
+s2x <- sum((x - mean(x))^2)/n
+sqrt(1/(n*s2x))
+```
+
+
+
