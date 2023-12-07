@@ -81,6 +81,7 @@ Per visualizzare invece le caratteristiche di variabili categoriali possiamo usa
 
 ```{r}
 #?barplot
+barplot(table(mrents$bath))
 ```
 
 
@@ -89,12 +90,15 @@ Ora indagare quali siano i fattori che influenzano il prezzo di affitto di una p
 ```{r}
 # summary
 # how to subset in R? use []
+summary(mrents$rent[mrents$kitchen == 0])
+summary(mrents[mrents$kitchen == 1, 'rent'])
 ```
 
 Usando dei boxplot si possono confrontare visualmente gli affitti in proprietà con cucine o bagni standard e premium: 
 
 ```{r}
 #?boxplot
+boxplot(rent ~ bath, data = mrents)
 ```
 
 Le proprietà con cucina o bagno *premium* tendono ad avere affitti più .... 
@@ -102,19 +106,36 @@ Le proprietà con cucina o bagno *premium* tendono ad avere affitti più ....
 Possiamo migliorare la leggibilità di questi grafici notando che sebbene `kitchen` sia codificata come variabile numerica nel dataset, essa sia in realtà una variabile categoriale: 
 
 ```{r}
-# 
+boxplot(
+  rent ~ bath,
+  data = mrents,
+  col = c('orange', 'red'),
+  main = 'price per bathroom type'
+)
 ```
 
 Qual è invece l'effetto della `location`? 
 
 ```{r}
 # boxplot
+boxplot(
+  rent ~ location,
+  data = mrents,
+  col = c('orange', 'red', 'lightblue'),
+  main = 'prices based on location'
+)
 ```
 
 I boxplots risultano utili per confrontare variabili continue per diversi livelli di variabili categoriali. Spesso però il nostro interesse è nella relazione tra due o più variabili continue. Per esempio potremmo voler indagare l'effetto che ha l'area di un immobile sul prezzo d'affitto. Per visualizzare questa relazione possiamo usare un grafico di dispersione: 
 
 ```{r}
 #?plot
+plot(
+  mrents$rent,
+  mrents$area,
+)
+
+plot(mrents$yearc, mrents$rent, pch = 16, col = "darkblue")
 ```
 
 
