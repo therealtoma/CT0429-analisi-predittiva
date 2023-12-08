@@ -1,6 +1,6 @@
 ---
 title: "CT0429 - Analisi Predittiva - aa 21/22 - Appello I"
-author: "Nome Cognome - matricola"
+author: "Alberto Tomasin - 892614"
 output: 
   html_document: 
     toc: yes
@@ -42,20 +42,59 @@ dex1 <- read.csv("ex1_data.csv", header = TRUE)
 
 Si costruisca un primo modello `fit1` in cui le variabili `age` e `numAccess` sono usate come predittori. Si stimi il modello `fit1` commentando la sua significatività. 
 
+```{r}
+fit1 <- lm(time ~ ., data = dex1)
+summary(fit1)
+```
 
-
+Possiamo notare che il tempo passato dall'utente è influenzato solamente dal numero di accessi (`numAccess`) che sono eseguiti, l'età (`age`) è trascurabile. Nonostante ciò il modello è in grado di spiegare quasi il **93%** della variabilità totale dei dati.
 
 ### Es. 1.b 
 
 Si costruisca un modello `fit2` in cui solo la variabile `numAccess` è usata come predittore: si verifichi tramite una verifica di ipotesi se il modello `fit2` risulta significativo rispetto al modello `fit1`. Si scriva in forma esplicita l'ipotesi nulla e alternativa che si stanno verificando tramite il test indicando infine se è possibile rifiutare l'ipotesi nulla. 
 
+```{r}
+fit2 <- lm(time ~ numAccess, data = dex1)
 
+anova(fit1, fit2)
+```
+
+Dal risultato del test `anova` notiamo che il modello `fit2` ha un **f-value** molto basso e un **p-value** alto. Possiamo concludere quindi che il modello `fit2` risulta più significativo rispetto al modello con tutte le variabili.
+
+Stiamo cercando di valutare il sistema di ipotesi $H_0: \beta_0 = 0 \ VS \ H_a: \beta_0 \not = 0$, concludendo che non possiamo rifiutare l'ipotesi nulla a favore dell'ipotesi alternativa.
 
 ### Es. 1.c
 
 Usando il modello `fit2` si calcolino degli intervalli di confidenza e di predizione per degli utenti che compiano 60 e 200 accessi. Si commenti l'ampiezza degli intervalli ottenuti e si spieghi brevemente la differenza tra intervallo di confidenza e di predizione.  
 
+```{r}
+ic <- predict(
+  fit2,
+  newdata = data.frame(
+    numAccess = c(60, 200)
+    ),
+  interval = 'confidence'
+)
 
+ic[, 3] - ic[, 2]
+```
+```{r}
+ip <- predict(
+  fit2,
+  newdata = data.frame(
+    numAccess = c(60, 200)
+  ),
+  interval = 'prediction'
+)
+
+ip[, 3] - ip[, 2]
+```
+
+Notiamo che il secondo intervallo, in entrambi i casi, risulta molto più ampio rispetto al primo. Questo succede perchè all'interno del dataset non sono presenti casi in cui un utente ha effettuato 200 accessi. Questo implica che il modello deve predirre valori che sono molto più grandi rispetto ai dati che conosce.
+
+Un intervallo di **confidenza** rappresenta l'incertezza attorno al valore medio del numero di accessi, l'intervallo di **predizione** indica l'incertezza attorno i valori effettivi.
+
+Noto, inoltre, che i valori negli intervalli di confidenza sono minori rispetto ai valori negli intervalli di predizione; questo succede perche la media, per definizione, è meno variabile rispetto alle singole osservazioni
 
 
 
@@ -93,7 +132,12 @@ Si stimi il modello `fitTot`, un modello lineare generalizzato in cui tutti pred
 Si commenti l'effetto stimato delle variabili `numAccess` e `numRequests`
 
 
+```{r}
+fitTot <- glm(fail ~ ., data = dex2, family = binomial)
+summary(fitTot)
+```
 
+Notiamo che la variabile `numAccess` è significativa all'interno del modello, mentre `numRequests` no. Questo indica quindi che i fallimenti del sistema risultano molto influenzati dal numero di accessi che vengono fatti.
 
 
 ### Es. 2.b
@@ -101,8 +145,12 @@ Si commenti l'effetto stimato delle variabili `numAccess` e `numRequests`
 Usando un approccio backward si parta dal modello `fitTot` per individuare dei modelli che risultino in qualche senso ottimali. Si utilizzi sia AIC che BIC per l'individuazione di questo modello ottimale. Si nota una qualche differenza nella scelta effettuata usando i due criteri? Si commenti il risultato della selezione delineando le differenze tra i due criteri. 
 
 
+```{r}
+print(step(fitTot, direction = 'backward', trace = 0, k = 2)) # AIC
+print(step(fitTot, direction = 'backward', trace = 0, k = log(450))) # BIC
+```
 
-
+Nptiamo che BIC ha selezionato un modello con meno parametri. Questo succede perchè BIC tende a penalizzare maggiormente i modelli che hanno molti parametri, specialmente nel caso in cui log(2) risulta tanto maggiore di 2.
 
 ### Es. 2.c 
 
