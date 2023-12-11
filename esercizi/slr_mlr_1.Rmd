@@ -1,0 +1,60 @@
+---
+title: "slr_mlr_1"
+author: "Alberto Tomasin"
+output: 
+  html_document: 
+    toc: yes
+---
+
+I dati in `grains.dat` sono stati raccolti nel 2007 in uno studio sula relazione tra la resa in termini di alcool nel processo di distillazione e l'azoto contenuto nel grano distillato. I dati sono stati raccolti in quattro diverse aree del Regno Unito. Il dataset ha tre colonne: **nitrogen** è la percentuale di azoto (per kilogrammo), **alcohol** è la resa in alcool in Litri per Tonnellata, **elocation** indica il luogo in cui è stato coltivato il grano.
+
+```{r}
+grain_df <- read.csv('data/grains.dat', sep = ' ', header = TRUE)
+head(grain_df)
+```
+
+
+
+1. Si produca un grafico dei dati. La relazione tra le variabili in esame appare lineare?
+
+```{r}
+plot(
+  grain_df$alcohol ~ grain_df$nitrogen,
+  xlab = 'nitrogen',
+  ylab = 'alcohol'
+  )
+```
+
+Notiamo una relazione lineare tra i dati, una primissima conclusione che possiamo fare è che la resa di alcol diminuisce man mano che aumenta la percentuale di azoto.
+
+2. Si dia una stima puntuale per $\alpha$ e $\beta$.
+
+```{r}
+fit1 <- lm(alcohol ~ nitrogen, data = grain_df)
+coef(fit1)
+```
+
+3. Si dia una stima intervallare ad un livello di confidenza di 99% per $\alpha$ e $\beta$.
+
+```{r}
+pred <- predict(fit1, interval = 'confidence', levels = .99)
+pred[, 3] - pred[, 2]
+```
+
+4. Quali sono le assunzioni necessarie per poter aver stime puntuali per i valori $\alpha$ e $\beta$? Quali sono le assunzioni necessarie per poter ottenere delle stime intervallari per $\alpha$ e $\beta$?
+
+Le assunzioni necessarie per avere stime puntuali per i valori di $\alpha$ e $\beta$ sono le 
+assunzioni relative ai modelli lineari, in particolare:
+
+#### linearità 
+La variabile risposta può essere scritta come combinazione lineare delle variabili indipendenti. Questa proprietà è possibile verificarla graficamente mostrando i valori predetti contro i residui. La linearità risulta verificata se i punti nel grafico risultano sparsi attorno alla retta dello zero e non seguono un pattern specifico
+
+```{r}
+plot(fitted(fit1), residuals(fit1))
+abline(h = 0, col = 'red')
+```
+
+
+Notiamo che i punti nel grafico risultano disposti casualmente attorno allo zero, concludiamo quindi che l'assunzione di linearità è verificata.
+
+
