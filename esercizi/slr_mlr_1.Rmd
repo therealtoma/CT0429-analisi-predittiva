@@ -18,8 +18,16 @@ head(grain_df)
 
 1. Si produca un grafico dei dati. La relazione tra le variabili in esame appare lineare?
 
-```{r}
-plot(grain_df$alcohol ~ grain_df$nitrogen)
+```{r, warning = FALSE}
+#plot(grain_df$alcohol ~ grain_df$nitrogen)
+library(ggplot2)
+qplot(
+  alcohol,
+  nitrogen,
+  data = grain_df,
+  xlab = "% azoto per kilogrammo",
+  ylab = "concentrazione alcolica"
+)
 ```
 
 La relazione appare lineare, con una tendenza a decrescere, in particolare possiamo affermare che all'aumentare della concentrazione di azoto, il grado alcolico diminuisce.
@@ -87,3 +95,105 @@ possiamo anche in questo caso usare il grafico valori predetti vs errori per ver
 plot(predict(fit1), residuals(fit1))
 ```
 
+5. aggiungere la retta di regressione stimata tra `alcohol` e `nitrogen` al grafico ottenuto al punto 1
+```{r}
+plot(grain_df$alcohol ~ grain_df$nitrogen)
+abline(fit1$coefficients[[1]], fit1$coefficients[[2]], col = 'red')
+```
+
+6. il dataset contiene la variabile `location`. Si scriva in forma estesa il modello che R stima quando si usa la funzione `lm(alcohol ~ location, data = grain_df)`
+
+la stima prodotta dalla funzione `lm` è:
+
+$$
+alcohol_i = \alpha + \beta_1 location_{Berwicks} + \beta_2 location_{E.Lothian} + \beta_3 location_{Norfolk} + \epsilon
+$$
+
+che R riassume nel seguente modo:
+
+
+```{r}
+summary(lm(alcohol ~ location, data = grain_df))
+```
+
+
+7. è valida l'affermazione che la variabile `location` spiega una buona parte della variabilità della variabile `alcohol`?
+
+Il modello con la variabile `location` è in grado di spiegare il 70% della variabilità. Notiamo però che locationE.Lothian risulta poco significativo avendo un p-value alto.
+
+8. Se si aggiunge la variabile location al modello in eq. (1) in cui solo nitrogen era presente nel modello, l'aggiunta di location risulta signifcativa? Come si può misurare l'evidenza contro la non-inclusione di location nel modello?
+
+Innanzitutto procediamo a creare il modello:
+
+```{r}
+fit2 <- lm(alcohol ~ nitrogen + location, data = grain_df)
+summary(fit2)
+```
+
+Il modello spiega una percentuale simile rispetto a `fit1`, nonostante i parametri risultano poco significativi.
+
+Per poter analizzare se l'aggiunta di `location` sia significativa, possiamo usare una tabella ANOVA
+
+```{r}
+anova(fit1, fit2)
+```
+
+Il p-value che otteniamo indica che l'aggiunta della variabile `location` non migliora significativamente il modello. Per questo motivo non la aggiungiamo
+
+9. si produca un grafico della relazione tra `location` e `nitrogen`. cosa si può notare?
+
+```{r}
+boxplot(nitrogen ~ location, data = grain_df)
+```
+
+Notiamo che le prime tre location hanno una concentrazione di alcol simile, Norfolk ha una concentrazione maggiore.
+
+10. Come si spiega la differenza dei è-value per `location` nei modelli stimati al punto 6 e al punto 8?
+
+11. Usando il modello specificato in eq. (1): si predica il valore medio della resa di alcool per del grano contenete il 1.9% d il 2.7% di azoto per kilogrammo.
+
+```{r}
+predict(
+  fit1,
+  newdata = data.frame(
+    "nitrogen" = c(1.9, 2.7)
+  )
+)
+```
+
+12. Si stimino gli intervalli di confidenza al 95% per i valori medi della resa di alcool stimati al punto 11, Quale è l'ampiezza di questi intervalli: si pieghi la differenza nell'ampiezza.
+
+```{r}
+conf_int <- predict(
+  fit1,
+  newdata = data.frame(
+    "nitrogen" = c(1.9, 2.7)
+  ),
+  interval = "confidence",
+  level = .95
+)
+
+conf_int[, 3] - conf_int[, 1]
+```
+Notiamo che l'ampiezza di questi intervalli risulta molto bassa.
+Il secondo intervallo risulta maggiore, anche se di poco, in quanto non esistono all'interno del dataset elementi dove la concentrazione di azoto sia pari a 2.7%; questo implica che il modello deve predirre valori che sono molto distanti dalla sua conoscenza.
+Il primo intervallo è molto più piccolo, il modello è già a conoscenza di casi in cui la concentrazione di azoto è pari a 1.9%
+
+13. usando il modello specificato in eq. (1); si predica il valore effettivo della resa di alcool per del grano contenete il 1.9% e il 2.7% di azoto per kilogrammo. Si dia anche una valurazione degli intervalli predittivi al 95% per questi valori.
+
+```{r}
+pred_int <- predict(
+  fit1,
+  newdata = data.frame(
+    "nitrogen" = c(1.9, 2.7)
+  ),
+  interval = "prediction",
+  level = .95
+)
+
+pred_int[, 2]
+pred_int[, 3]
+```
+
+Possiamo concludere che, ad un livello di significatività del 95%, la resa alcolica del grano contenente il 1.9% di azoto per kilogrammo sarà compresa tra circa 423 e 449.
+Per quanto riguarda la resa al 2.7% di azoto per kilogrammo, la resa alcolica sarà compresa tra 392 e 421 circa, ad un livello di significatività pari a 95%.
