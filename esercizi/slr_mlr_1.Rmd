@@ -198,3 +198,72 @@ Per quanto riguarda la resa al 2.7% di azoto per kilogrammo, la resa alcolica sa
 
 # Esercizio 2
 
+I dati nel file `hotels.csv` contengono informazioni sulla temperatura (X) e sul livello di occupazione di tre hotel (Y) in tre diverse città.
+```{r}
+hotels <- read.csv("data/hotels.csv")
+head(hotels)
+```
+
+### 2.1 - Si producano grafici di dispersione (o altri grafici che si ritengono utili) per valutare la relazione tra le variabili presenti nel dataset.
+
+Uno scatterplot mi permette di vedere la relazione tra due variabili continue, risulta ottimo per scoprire pattern
+```{r}
+plot(hotels$Y ~ hotels$X, main = "occupazione in funzione della temperatura")
+```
+
+I boxplot sono utilizzati per mostrare le relazioni tra variabili continue rispetto a diverse variabili categoriche
+```{r}
+boxplot(X ~ Month, data = hotels, main="temperatura in funzione del mese")
+```
+
+```{r}
+boxplot(X ~ City, data = hotels, main="temperatura in funzione della città")
+```
+
+```{r}
+boxplot(hotels$Y ~ hotels$Month, main = "occupazione in funzione del mese")
+```
+
+### 2.2 - Si stimi un modello lineare in cui si assume che il tasso di occupazione degli alberghi dipenda dalla temperatura: si dia un'interpretazione del modello stimato.
+
+```{r}
+fit2 <- lm(Y ~ X, data = hotels)
+summary(fit2)
+```
+Questo modello non è molto significativo (il p-value associato al tasso di occupazione è molto alto); in questo caso può essere necessario esaminare l'effetto della temperatura per le specifiche città.
+
+### 2.3 Si stimino separatamente tre modelli lineari per ogni città per studiare come il tasso di occupazione degli alberghi dipende dalla temperatura. Si dia un'interpretazione dei tre modelli confrontando i risultati con quelli ottenuti al punto 2.
+
+```{r}
+cities <- unique(hotels$City)
+
+davos_df <- hotels[which(hotels$City == cities[1]), ]
+mallorca_df <- hotels[which(hotels$City == cities[2]), ]
+basel_df <- hotels[which(hotels$City == cities[3]), ]
+
+fit_davos <- lm(Y ~ X, data = davos_df)
+fit_mallorca <- lm(Y ~ X, data = mallorca_df)
+fit_basel <- lm(Y ~ X, data = basel_df)
+```
+
+```{r}
+summary(fit_davos)
+```
+
+```{r}
+summary(fit_mallorca)
+```
+
+
+```{r}
+summary(fit_basel)
+```
+
+Rispetto al modello iniziale notiamo che, per la città *Devos*, l'effetto della temperatura risulta significativo, mentre per le altre città meno.
+
+### 2.4 - Alla luce dei modelli stimati al punto 3, si specifichi un modello che si ritiene possa essere utile per spiegare nella maniera migliore possibile la variabilità dell'occupazione degli hotel al variare della temperatura in tutte le città incluse nel dataset.
+
+```{r}
+step(lm(Y ~ ., data = hotels))
+```
+
