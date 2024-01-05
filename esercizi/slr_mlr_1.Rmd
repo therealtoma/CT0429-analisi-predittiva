@@ -267,3 +267,28 @@ Rispetto al modello iniziale notiamo che, per la città *Devos*, l'effetto della
 step(lm(Y ~ ., data = hotels))
 ```
 
+# Esercizio 3
+
+### 3.1 
+
+Il summary che corrisponde alla relazione in figura è `S1` perchè la figura mostra un andamento crescente, indicato dal coefficiente positivo di `S1`
+
+### 3.2
+
+Notiamo che entrambi i modelli hanno un RSS molto simile (0.6 vs 0.58), inoltre il p-value associato al secondo modello è abbastanza alto (> 0.05). L'aggiunta della variabile `x2` peggiora la precisione del modello. Concludiamo quindi che è preferibile utilizzare il modello che contiene solamente `x1`
+
+### 3.3
+
+- il modello `lm(y ~ x1 + x2)` con $R^2 = 0.686$
+- il modello `lm(y ~ x1)` con $R^2 = 0.695$
+- il modello `lm(y ~ x2)` con $R^2 = 0.0497$
+
+### 3.4
+
+Il grafico quantile-quantile che meglio rappresenta il comportamento del campione è il primo in quanto i punti seguono in modo migliore la linea obliqua.
+
+I grafici quantile-quantile possono essere utilizzati per una serie di aspetti:
+
+- verifica dell'assunzione di normalità: un grafico quantile-quantile nel quale i dati si distribuiscono sulla linea indica che l'assunzione di normalità è verificata
+
+- identificare problemi nel modello: il grafico quantile-quantile risulta utile nel capire, per esempio, la presenza di outliers all'interno del modello o non linearità dei dati 
